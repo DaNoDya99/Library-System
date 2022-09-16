@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-export default class DeleteBookC extends Component {
+export default class DeleteBook extends Component {
     render() {
         return(
             <div>
