@@ -2,7 +2,7 @@ import React from "react";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Switch, Route} from 'react-router-dom';
 import AddBook from "./components/add-book.component";
 import DeleteBook from "./components/delete-book.component";
 import AddMember from "./components/add-member.component";
