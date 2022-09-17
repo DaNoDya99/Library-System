@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import axios from "axios";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
@@ -15,8 +16,64 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import home from "../assets/home.png";
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onChangeNIC = this.onChangeNIC.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeGender = this.onChangeGender.bind(this);
+        this.onChangeAddress = this.onChangeAddress.bind(this);
+        this.onChangeContact = this.onChangeContact.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            nic: '',
+            name: '',
+            email: '',
+            gender: '',
+            address: '',
+            contact: ''
+        }
+    }
+    onChangeNIC(e){
+        this.setState({nic: e.target.value})
+    }
+    onChangeName(e){
+        this.setState({name: e.target.value})
+    }
+    onChangeEmail(e){
+        this.setState({email: e.target.value})
+    }
+    onChangeGender(e){
+        this.setState({gender: e.target.value})
+    }
+    onChangeAddress(e){
+        this.setState({address: e.target.value})
+    }
+    onChangeContact(e){
+        this.setState({contact: e.target.value})
+    }
+
+    onSubmit(e){
+        e.preventDefault()
+        const memberObject = {
+            nic: this.state.nic,
+            name: this.state.name,
+            email: this.state.email,
+            gender: this.state.gender,
+            address: this.state.address,
+            contact: this.state.contact
+        };
+        axios.post('http://localhost:4000/library/add-member', memberObject)
+            .then(res => console.log(res.data));
+        this.setState({nic: '', name: '', email: '', gender: '', address: '', contact: ''});
+    }
+
     render() {
         return (
             <div>
@@ -68,9 +125,12 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <div>
+                        <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                            </Link>
+                            <Link to={'/'} className={'nav-link'}>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
@@ -94,37 +154,47 @@ export default class Home extends Component {
                         </Navbar>
 
                         <div style={{'text-align':'center'}} >
-                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Add Member</h2>
-                            <Form style={{"width":"600px",'margin':"0 auto"}}>
-                                <Form.Group className="mb-3" controlId="formGroupNIC">
+                            <h2 className={'title2 my-3'} style={{'font-size':'50px'}}>Add Member</h2>
+
+                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                                <Form.Group className="mb-3" controlId="NIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>NIC Number</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter NIC Number" />
+                                    <Form.Control type="text" value={this.state.nic} onChange={this.onChangeNIC} placeholder="Enter NIC Number"/>
                                 </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupName">
+
+                                <Form.Group className="mb-3" controlId="Name">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Name" />
+                                    <Form.Control type="text" value={this.state.name} onChange={this.onChangeName} placeholder="Enter Name" />
                                 </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupEmail">
+
+                                <Form.Group className="mb-3" controlId="Email">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter Email" />
+                                    <Form.Control type="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="Enter Email" />
                                 </Form.Group>
-                                <Form.Group className={"mb-3"} controlId="formGroupGender">
+
+                                <Form.Group className={"mb-3"} controlId="Gender">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Gender</Form.Label>
-                                    <Form.Select aria-label="Default select example">
+                                    <Form.Select value={this.state.gender} onChange={this.onChangeGender} aria-label="Default select example" >
                                         <option>--- Select Gender ---</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </Form.Select>
                                 </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupAdress">
+
+                                <Form.Group className="mb-3" controlId="Adress">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Home Address</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Home Address" />
+                                    <Form.Control type="text" value={this.state.address} onChange={this.onChangeAddress} placeholder="Enter Home Address" />
                                 </Form.Group>
 
+                                <Form.Group className="mb-3" controlId="Contact">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Contact Number</Form.Label>
+                                    <Form.Control value={this.state.contact} onChange={this.onChangeContact} type="text" placeholder="Enter Contact Number" />
+                                </Form.Group>
 
+                                <Button className={'text'} type="submit" size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'30px'}} block="block">ADD</Button>
                             </Form>
 
-                            <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>ADD</Button>
+
                         </div>
                     </div>
                 </Row>

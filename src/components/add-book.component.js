@@ -3,6 +3,7 @@ import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -15,8 +16,52 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import home from "../assets/home.png";
 
 export default class Home extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChangeBookID = this.onChangeBookID.bind(this);
+        this.onChangeBookName = this.onChangeBookName.bind(this);
+        this.onChangeAuthor = this.onChangeAuthor.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            id: '',
+            name: '',
+            author: '',
+            quantity: ''
+        }
+    }
+
+    onChangeBookID(e) {
+        this.setState({id: e.target.value});
+    }
+    onChangeBookName(e) {
+        this.setState({name: e.target.value});
+    }
+    onChangeAuthor(e) {
+        this.setState({author: e.target.value});
+    }
+    onChangeQuantity(e) {
+        this.setState({quantity: e.target.value});
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const bookObject = {
+            id: this.state.id,
+            name: this.state.name,
+            author: this.state.author,
+            quantity: this.state.quantity
+        }
+        axios.post('http://localhost:4000/library/add-book', bookObject)
+            .then(res => console.log(res.data));
+        this.setState({id:'',name:'',author:'',quantity:''});
+    }
+
     render() {
         return (
             <div>
@@ -68,9 +113,12 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <div>
+                        <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                            </Link>
+                            <Link to={'/'} className={'nav-link'}>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
@@ -95,26 +143,30 @@ export default class Home extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Add Book</h2>
-                            <Form style={{"width":"600px",'margin':"0 auto"}}>
-                                <Form.Group className="mb-3" controlId="formGroupEmail">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Book ID" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupPassword">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Book Name" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupPassword">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Author Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Author Name" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupPassword">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Description</Form.Label>
-                                    <Form.Control as={'textarea'} rows={3} placeholder="Enter Description" />
-                                </Form.Group>
-                            </Form>
 
-                            <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>ADD</Button>
+                            <Form style={{"width":"600px",'margin':"0 auto"}} onSubmit={this.onSubmit}>
+
+                                <Form.Group className="mb-3" controlId="Id">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
+                                    <Form.Control type="text" value={this.state.id} onChange={this.onChangeBookID} placeholder="Enter Book ID" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Book">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
+                                    <Form.Control type="text" value={this.state.name} onChange={this.onChangeBookName} placeholder="Enter Book Name" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Author">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Author Name</Form.Label>
+                                    <Form.Control type="text" value={this.state.author} onChange={this.onChangeAuthor} placeholder="Enter Author Name" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Quantity">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Quantity</Form.Label>
+                                    <Form.Control type={'text'} value={this.state.quantity} onChange={this.onChangeQuantity} placeholder="Enter Quantity" />
+                                </Form.Group>
+                                <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}} type='submit' block="block">ADD</Button>
+                            </Form>
                         </div>
                     </div>
                 </Row>

@@ -94,7 +94,7 @@ export default class Home extends Component {
                         </Navbar>
 
                         <div style={{'text-align':'center'}}>
-                            <img className={'mt-4'} src={profile} style={{'width':'200px','border':'2px solid #555',
+                            <img className={'mt-4'} src={profile} style={{'width':'150px','border':'2px solid #555',
                                 'border-top-right-radius':'25px','border-bottom-right-radius':'25px','border-bottom-left-radius':'25px'}} alt=""/>
                             <div>
                                 <h2 className={'title2 mt-5'}>Search History</h2>

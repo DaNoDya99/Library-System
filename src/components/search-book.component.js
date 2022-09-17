@@ -3,6 +3,7 @@ import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -15,8 +16,68 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import home from "../assets/home.png";
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.state = {
+            name: '',
+            bookDetails: {},
+            flag: false
+        }
+    }
+
+    onChangeName(e){
+        this.setState({name: e.target.value});
+    }
+
+    onSubmit(e){
+        e.preventDefault();
+        axios.get('http://localhost:4000/library/search-book/'+this.state.name)
+            .then(res => {
+                this.setState({
+                   bookDetails: res.data
+                });
+                this.setState({
+                    flag:true
+                })
+            }).catch((error) => {
+            console.log("Error")
+        });
+    }
+
+    tableData(){
+        if(this.state.flag){
+            return (
+                <div style={{'text-align':'center'}}>
+                    <h2 className={'title2 mt-5'}>Search Results</h2>
+                    <hr style={{"border-top": "6px dotted red"}}/>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Book Name</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }else{
+            return <div></div>;
+        }
+
+    }
+
     render() {
         return (
             <div>
@@ -68,9 +129,12 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <div>
+                        <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                            </Link>
+                            <Link to={'/'} className={'nav-link'}>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
@@ -95,15 +159,16 @@ export default class Home extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Book</h2>
-                            <Form style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupBook">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Book Name" />
+                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Book Name" />
                                 </Form.Group>
+                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
-
-                            <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                         </div>
+
+                        {this.tableData()}
                     </div>
                 </Row>
             </div>

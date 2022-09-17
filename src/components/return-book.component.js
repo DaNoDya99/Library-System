@@ -15,6 +15,7 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import home from "../assets/home.png";
 
 export default class Home extends Component {
     render() {
@@ -68,9 +69,12 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <div>
+                        <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                            </Link>
+                            <Link to={'/'} className={'nav-link'}>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>

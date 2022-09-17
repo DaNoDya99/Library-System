@@ -14,7 +14,7 @@ export default class Signup extends Component {
                         <h1 className={"title mt-5"}>Book Hub</h1>
                         <h2 className={"title2"} style={{'color':'#F9F5EB'}}>Library Management System</h2>
 
-                        <img src={Lib} className={'mt-4 mb-4'} alt="Library" style={{'width':'700px','border-bottom-right-radius':'50px','border-top-left-radius':'50px'
+                        <img src={Lib} className={'mt-4 mb-4'} alt="Library" style={{'width':'680px','border-bottom-right-radius':'50px','border-top-left-radius':'50px'
                         ,'border':'5px solid #607EAA'}}/>
 
                         <h1 className={"mt-lg-5 title"}>Welcome Back!</h1>
