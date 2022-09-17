@@ -21,10 +21,10 @@ export default class Home extends Component {
         return (
             <div>
                 <Row>
-                    <div className={"col-5"} style={{'background-color':'#1C3879','height':'100vh','text-align':'center','border-bottom-right-radius':'100px'}}>
+                    <div className={"col-5"} style={{'background-color':'#1C3879','text-align':'center','border-bottom-right-radius':'100px'}}>
                         <h1 className={"title mt-5"}>Book Hub</h1>
                         <p className={"text h3"}>Welcome back to the library.</p>
-                        <Row style={{'margin-top': '12rem'} }>
+                        <Row style={{'margin-top': '10rem'} }>
                             <Col>
                                 <div>
                                     <Link to={'/add-book'} className={'nav-link'}>
@@ -70,7 +70,7 @@ export default class Home extends Component {
                         </Row>
                         <div>
                             <Link to={'login'} className={'nav-link'}>
-                                <img src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={"mb-5"} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
