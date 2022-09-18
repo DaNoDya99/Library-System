@@ -12,6 +12,7 @@ import SearchBook from "./components/search-book.component";
 import Signup from "./components/signup.";
 import Home from "./components/home";
 import EditBook from "./components/edit-book.component";
+import SearchMember from "./components/search-member.component";
 
 
 function App() {
@@ -61,6 +62,12 @@ function App() {
                 exact
                 path="/edit-book"
                 component={(props) => <EditBook {... props}/>}
+            />
+
+            <Route
+                exact
+                path="/search-member"
+                component={(props) => <SearchMember {... props}/>}
             />
         </Switch>
     )

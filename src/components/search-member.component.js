@@ -61,14 +61,26 @@ export default class Home extends Component {
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Book Name</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Quantity</th>
+                            <th scope="col">NIC Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Home Address</th>
+                            <th scope="col">Contact Number</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td></tr>
+                            <tr>
+                                <td>995512203V</td>
+                                <td>Viharsha Jayathilaka</td>
+                                <td>vpjayathilakegmail.com</td>
+                                <td>female</td>
+                                <td>Mathugama</td>
+                                <td>0776753457</td>
+                                <td><Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Edit Member</Button> <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Delete Member</Button></td>
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>
