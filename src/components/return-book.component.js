@@ -17,6 +17,8 @@ import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
 import home from "../assets/home.png";
+import searchMemberLogo from "../assets/searchMember.png";
+
 
 export default class Home extends Component {
 
@@ -95,6 +97,16 @@ export default class Home extends Component {
                                     </Link>
                                 </div>
                             </Col>
+                        </Row>
+
+                        <Row>
+                            <div>
+                                <Link to={'/search-member'} className={'nav-link'}>
+                                    <img src={searchMemberLogo} alt="add logo" style={{"width":'100px'}}/>
+                                    <p className={"text"}>Search Member</p>
+                                </Link>
+                            </div>
+
                         </Row>
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>

@@ -19,7 +19,6 @@ import profile from "../assets/profile.png";
 import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-
 export default class Home extends Component {
 
     constructor(props) {
@@ -66,15 +65,10 @@ export default class Home extends Component {
                             <th scope="col">Book Name</th>
                             <th scope="col">Author</th>
                             <th scope="col">Quantity</th>
-                            <th scope={"col"}>Edit</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td>
-                                <Link to={'/edit-book'} className={'nav-link'}>
-                                    <td><Button style={{'background-color':'#277BC0'}}>Edit Book</Button></td>
-                                </Link>
-                            </tr>
+                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -146,6 +140,7 @@ export default class Home extends Component {
                             </div>
 
                         </Row>
+                        
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
                                 <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
@@ -175,11 +170,11 @@ export default class Home extends Component {
                         </Navbar>
 
                         <div style={{'text-align':'center'}} >
-                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Book</h2>
+                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Member</h2>
                             <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupBook">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Book Name" />
+                                    <Form.Label className={'text'} style={{'color':'black'}}> Name of the member</Form.Label>
+                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Member Name" />
                                 </Form.Group>
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
