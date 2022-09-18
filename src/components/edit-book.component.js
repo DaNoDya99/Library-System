@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
+import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -15,8 +16,53 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import searchMemberLogo from "../assets/searchMember.png"
+import home from "../assets/home.png"
 
 export default class EditBook extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChangeBookID = this.onChangeBookID.bind(this);
+        this.onChangeBookName = this.onChangeBookName.bind(this);
+        this.onChangeAuthor = this.onChangeAuthor.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            id: '',
+            name: '',
+            author: '',
+            quantity: ''
+        }
+    }
+
+    onChangeBookID(e) {
+        this.setState({id: e.target.value});
+    }
+    onChangeBookName(e) {
+        this.setState({name: e.target.value});
+    }
+    onChangeAuthor(e) {
+        this.setState({author: e.target.value});
+    }
+    onChangeQuantity(e) {
+        this.setState({quantity: e.target.value});
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const bookObject = {
+            id: this.state.id,
+            name: this.state.name,
+            author: this.state.author,
+            quantity: this.state.quantity
+        }
+        axios.post('http://localhost:4000/library/edit-book', bookObject)
+            .then(res => console.log(res.data));
+        this.setState({id:'',name:'',author:'',quantity:''});
+    }
+
     render() {
         return (
             <div>
@@ -69,9 +115,21 @@ export default class EditBook extends Component {
                             </Col>
                         </Row>
 
-                        <div>
+                        <Row>
+                            <div>
+                                <Link to={'/search-member'} className={'nav-link'}>
+                                    <img src={searchMemberLogo} alt="add logo" style={{"width":'100px'}}/>
+                                    <p className={"text"}>Search Member</p>
+                                </Link>
+                            </div>
+                        </Row>
+
+                        <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                            </Link>
+                            <Link to={'/'} className={'nav-link'}>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
@@ -94,12 +152,39 @@ export default class EditBook extends Component {
                             </Container>
                         </Navbar>
 
-                        <div style={{'text-align':'center'}}>
+                        <div style={{'text-align':'center'}} >
+                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Edit Book</h2>
 
+                            <Form style={{"width":"600px",'margin':"0 auto"}}>
+
+                                <Form.Group className="mb-3" controlId="Id">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Book ID" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Book">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Book Name" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Author">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Author Name</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Author Name" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="Quantity">
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Quantity</Form.Label>
+                                    <Form.Control type={'text'} placeholder="Enter Quantity" />
+                                </Form.Group>
+                                <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}} type='submit' block="block">SAVE</Button>
+                            </Form>
                         </div>
                     </div>
                 </Row>
             </div>
+
+            
+            
         );
     }
 }
