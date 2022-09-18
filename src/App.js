@@ -11,6 +11,7 @@ import ReturnBook from "./components/return-book.component";
 import SearchBook from "./components/search-book.component";
 import Signup from "./components/signup.";
 import Home from "./components/home";
+import EditBook from "./components/edit-book.component";
 
 
 function App() {
@@ -55,6 +56,11 @@ function App() {
                 exact
                 path="/search-book"
                 component={(props) => <SearchBook {...props} />}
+            />
+            <Route
+                exact
+                path="/edit-book"
+                component={(props) => <EditBook {... props}/>}
             />
         </Switch>
     )

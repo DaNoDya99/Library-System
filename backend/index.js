@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from "mongoose";
 import cors from 'cors';
 import bodyParser from "body-parser";
+import session from "express-session";
+import passport from "passport";
 
 import libraryRoute from "../backend/routes/library.route.js";
 
@@ -15,6 +17,16 @@ mongoose
     });
 
 const app = express();
+
+app.use(session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+}))
+
+app.use(passport.initialize(undefined));
+app.use(passport.session(undefined));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());

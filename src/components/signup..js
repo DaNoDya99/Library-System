@@ -1,11 +1,42 @@
 import React, {Component} from "react";
 import './home.css';
 import {Row,Form,Button} from "react-bootstrap";
+import axios from "axios";
 
 import Lib from '../assets/lib.jpg';
 
 
 export default class Signup extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
+
+    onChangeEmail(e) {
+        this.setState({email: e.target.value});
+    }
+    onChangePassword(e) {
+        this.setState({password: e.target.value});
+    }
+    onSubmit(e){
+        e.preventDefault();
+        const userObject = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        axios.post('http://localhost:4000/library/login', userObject)
+            .then();
+        this.setState({email:'',password:''});
+    }
+
     render() {
         return(
             <div>
@@ -25,20 +56,20 @@ export default class Signup extends Component {
                             <h2 className={'title2 mt-5'} style={{'font-size':'50px'}}>Welcome Back! Please Login Your Account</h2>
                         </div>
 
-                        <Form style={{'width':'500px','margin-left':'100px','margin-top':'60px'}}>
+                        <Form onSubmit={this.onSubmit} style={{'width':'500px','margin':'0 auto','margin-top':'60px'}}>
                             <Form.Group className="mb-3" controlId="formGroupEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
+                                <Form.Control  value={this.state.email} onChange={this.onChangeEmail}  type="email" placeholder="Enter email" />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formGroupPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control  value={this.state.password} onChange={this.onChangePassword}  type="password" placeholder="Password" />
                             </Form.Group>
+                            <div style={{'text-align':'center'}}>
+                                <Button type={'submit'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
+                            </div>
                         </Form>
 
-                        <div style={{'text-align':'center'}}>
-                            <Button size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
-                        </div>
                     </div>
                 </Row>
             </div>

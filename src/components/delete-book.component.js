@@ -39,7 +39,7 @@ export default class Home extends Component {
         e.preventDefault();
         axios.delete('http://localhost:4000/library/delete-book/'+this.state.name)
             .then((res)=>{
-                console.log('Student successfully deleted!');
+                console.log('Book successfully deleted!');
             }).catch((error) => {
             console.log(error);
         });

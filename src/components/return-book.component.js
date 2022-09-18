@@ -3,6 +3,7 @@ import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -18,6 +19,32 @@ import profile from "../assets/profile.png";
 import home from "../assets/home.png";
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeNIC = this.onChangeNIC.bind(this);
+
+        this.state = {
+            nic: ''
+        }
+    }
+
+    onChangeNIC(e){
+        this.setState({nic: e.target.value})
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        axios.delete('http://localhost:4000/library/return-book/' + this.state.nic)
+            .then((res) => {
+                console.log('Book Successfully returned');
+            }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     render() {
         return (
             <div>
@@ -99,14 +126,15 @@ export default class Home extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Return Book</h2>
-                            <Form style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupNIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Member NIC Number</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter NIC Number" />
+                                    <Form.Control value={this.state.nic} onChange={this.onChangeNIC} type="text" placeholder="Enter NIC Number" />
                                 </Form.Group>
+                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>RETURN</Button>
                             </Form>
 
-                            <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>RETURN</Button>
+
                         </div>
                     </div>
                 </Row>

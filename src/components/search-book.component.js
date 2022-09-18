@@ -64,10 +64,15 @@ export default class Home extends Component {
                             <th scope="col">Book Name</th>
                             <th scope="col">Author</th>
                             <th scope="col">Quantity</th>
+                            <th scope={"col"}>Edit</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td></tr>
+                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td>
+                                <Link to={'/edit-book'} className={'nav-link'}>
+                                    <td><Button style={{'background-color':'#277BC0'}}>Edit Book</Button></td>
+                                </Link>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
