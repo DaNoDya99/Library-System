@@ -21,7 +21,7 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class Home extends Component {
+export default class IssueBook extends Component {
 
     constructor(props) {
         super(props);

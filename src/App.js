@@ -12,7 +12,8 @@ import SearchBook from "./components/search-book.component";
 import Signup from "./components/signup.";
 import Home from "./components/home";
 import EditBook from "./components/edit-book.component";
-
+import SearchMember from "./components/search-member.component";
+import EditMember from "./components/edit-member.component";
 
 function App() {
     return(
@@ -61,6 +62,17 @@ function App() {
                 exact
                 path="/edit-book"
                 component={(props) => <EditBook {... props}/>}
+            />
+
+            <Route
+                exact
+                path="/search-member"
+                component={(props) => <SearchMember {... props}/>}
+            />
+            <Route
+                exact
+                path='/edit-member'
+                component={(props) => <EditMember {... props}/>}
             />
         </Switch>
     )

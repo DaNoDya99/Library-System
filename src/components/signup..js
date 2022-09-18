@@ -17,7 +17,7 @@ export default class Signup extends Component {
         this.state = {
             email: '',
             password: '',
-            flag: false
+            flag: ''
         }
 
     }
@@ -35,7 +35,7 @@ export default class Signup extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('http://localhost:4000/library/login', userObject)
+        axios.post('http://localhost:4000/library/login', {email:this.state.email,password:this.state.password})
             .then();
         this.setState({email:'',password:''});
 

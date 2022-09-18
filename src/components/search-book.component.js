@@ -20,7 +20,7 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class Home extends Component {
+export default class SearchBook extends Component {
 
     constructor(props) {
         super(props);
@@ -49,7 +49,7 @@ export default class Home extends Component {
                     flag:true
                 })
             }).catch((error) => {
-            console.log("Error")
+            console.log(error)
         });
     }
 

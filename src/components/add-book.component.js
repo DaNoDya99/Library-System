@@ -20,7 +20,7 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class Home extends Component {
+export default class AddBook extends Component {
     constructor(props) {
         super(props);
 
@@ -123,8 +123,8 @@ export default class Home extends Component {
                                     <p className={"text"}>Search Member</p>
                                 </Link>
                             </div>
-
                         </Row>
+                        
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
                                 <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>

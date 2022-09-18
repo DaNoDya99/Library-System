@@ -19,30 +19,30 @@ import profile from "../assets/profile.png";
 import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-export default class Home extends Component {
+export default class SearchMember extends Component {
 
     constructor(props) {
         super(props);
 
-        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeNIC = this.onChangeNIC.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
-            name: '',
-            bookDetails: {},
+            nic: '',
+            memberDetails: {},
             flag: false
         }
     }
 
-    onChangeName(e){
-        this.setState({name: e.target.value});
+    onChangeNIC(e){
+        this.setState({nic: e.target.value});
     }
 
     onSubmit(e){
         e.preventDefault();
-        axios.get('http://localhost:4000/library/search-book/'+this.state.name)
+        axios.get('http://localhost:4000/library/search-member/'+this.state.nic)
             .then(res => {
                 this.setState({
-                   bookDetails: res.data
+                   memberDetails: res.data
                 });
                 this.setState({
                     flag:true
@@ -61,22 +61,39 @@ export default class Home extends Component {
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Book Name</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Quantity</th>
+                            <th scope="col">NIC Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Home Address</th>
+                            <th scope="col">Contact Number</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td></tr>
+                            <tr>
+                                <td>{this.state.memberDetails.nic}</td>
+                                <td>{this.state.memberDetails.name}</td>
+                                <td>{this.state.memberDetails.email}</td>
+                                <td>{this.state.memberDetails.gender}</td>
+                                <td>{this.state.memberDetails.address}</td>
+                                <td>{this.state.memberDetails.contact}</td>
+                                <td style={{'display':'flex','flex-direction':'row'}}>
+                                    <Link to={'/edit-member'} className={'nav-link'}>
+                                        <Button className={'text'} style={{'background-color':'#277BC0'}}>Edit</Button>
+                                    </Link>
+                                    <Button className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
+                                </td>
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+
             );
         }else{
             return <div></div>;
         }
-
     }
 
     render() {
@@ -173,8 +190,8 @@ export default class Home extends Component {
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Member</h2>
                             <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupBook">
-                                    <Form.Label className={'text'} style={{'color':'black'}}> Name of the member</Form.Label>
-                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Member Name" />
+                                    <Form.Label className={'text'} style={{'color':'black'}}> NIC Number of The Member</Form.Label>
+                                    <Form.Control value={this.state.nic} onChange={this.onChangeNIC} type="text" placeholder="Enter NIC" />
                                 </Form.Group>
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
