@@ -69,9 +69,7 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-<<<<<<< HEAD
 
-=======
                         <Row>
                             <div>
                                 <Link to={'/search-member'} className={'nav-link'}>
@@ -81,7 +79,7 @@ export default class Home extends Component {
                             </div>
 
                         </Row>
->>>>>>> f4a63d29454d708dfce8927b7a112ffc86e83441
+
                         <div>
                             <Link to={'login'} className={'nav-link'}>
                                 <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
