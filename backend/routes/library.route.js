@@ -1,5 +1,7 @@
 import express from 'express';
 import bcrypt from "bcrypt";
+import passport from "passport";
+import passportLocal from 'passport-local';
 
 import bookSchema from "../models/Book.js";
 import memberSchema from "../models/Member.js";
@@ -7,6 +9,11 @@ import issueSchema from "../models/Issue.js";
 import userSchema from "../models/User.js";
 
 const router = express.Router();
+const localStrategy = passportLocal.Strategy;
+
+const authFlag = {
+    flag: ''
+}
 
 router.route('/add-book').post((req, res, next) => {
     bookSchema.create(req.body, (error, data) => {
@@ -97,7 +104,11 @@ router.route('/setup').get((req,res,next) => {
 });
 
 router.route('/login').post((req, res, next) => {
-   console.log(req.body);
+   
+});
+
+router.route('/login').get((req, res, next) => {
+    res.json({flag:true});
 });
 
 export default router;

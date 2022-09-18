@@ -4,7 +4,7 @@ import {Row,Form,Button} from "react-bootstrap";
 import axios from "axios";
 
 import Lib from '../assets/lib.jpg';
-
+import {Redirect} from "react-router-dom";
 
 export default class Signup extends Component {
     constructor(props) {
@@ -16,8 +16,10 @@ export default class Signup extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            flag: false
         }
+
     }
 
     onChangeEmail(e) {
@@ -26,6 +28,7 @@ export default class Signup extends Component {
     onChangePassword(e) {
         this.setState({password: e.target.value});
     }
+
     onSubmit(e){
         e.preventDefault();
         const userObject = {
@@ -35,6 +38,24 @@ export default class Signup extends Component {
         axios.post('http://localhost:4000/library/login', userObject)
             .then();
         this.setState({email:'',password:''});
+
+        axios.get('http://localhost:4000/library/login')
+            .then(res => {
+                this.setState({
+                    flag: res.data.flag
+                })
+                console.log(this.state.flag);
+            }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    redirect(){
+        if(this.state.flag) {
+            return <Redirect to={'/'} />
+        } else {
+            return <div></div>;
+        }
     }
 
     render() {
@@ -69,7 +90,7 @@ export default class Signup extends Component {
                                 <Button type={'submit'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
                             </div>
                         </Form>
-
+                        {this.redirect()}
                     </div>
                 </Row>
             </div>

@@ -3,6 +3,7 @@ import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -18,6 +19,15 @@ import profile from "../assets/profile.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            flag:{}
+        }
+    }
+
     render() {
         return (
             <div>
@@ -69,9 +79,6 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
-<<<<<<< HEAD
-
-=======
                         <Row>
                             <div>
                                 <Link to={'/search-member'} className={'nav-link'}>
@@ -81,7 +88,6 @@ export default class Home extends Component {
                             </div>
 
                         </Row>
->>>>>>> f4a63d29454d708dfce8927b7a112ffc86e83441
                         <div>
                             <Link to={'login'} className={'nav-link'}>
                                 <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
