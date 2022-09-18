@@ -15,6 +15,7 @@ import bookShelf from "../assets/bookshelf.png";
 import info from "../assets/info.png";
 import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
+import searchMemberLogo from "../assets/searchMember.png";
 
 export default class Home extends Component {
     render() {
@@ -67,6 +68,15 @@ export default class Home extends Component {
                                     </Link>
                                 </div>
                             </Col>
+                        </Row>
+                        <Row>
+                            <div>
+                                <Link to={'/search-member'} className={'nav-link'}>
+                                    <img src={searchMemberLogo} alt="add logo" style={{"width":'100px'}}/>
+                                    <p className={"text"}>Search Member</p>
+                                </Link>
+                            </div>
+
                         </Row>
                         <div>
                             <Link to={'login'} className={'nav-link'}>

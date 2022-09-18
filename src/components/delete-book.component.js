@@ -18,6 +18,8 @@ import profile from "../assets/profile.png";
 import { Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import home from "../assets/home.png";
+import searchMemberLogo from "../assets/searchMember.png";
+
 
 export default class Home extends Component {
 
@@ -96,6 +98,17 @@ export default class Home extends Component {
                                 </div>
                             </Col>
                         </Row>
+
+                        <Row>
+                            <div>
+                                <Link to={'/search-member'} className={'nav-link'}>
+                                    <img src={searchMemberLogo} alt="add logo" style={{"width":'100px'}}/>
+                                    <p className={"text"}>Search Member</p>
+                                </Link>
+                            </div>
+
+                        </Row>
+                        
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
                                 <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
