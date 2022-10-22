@@ -39,7 +39,8 @@ export default class DeleteBook extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        axios.delete('http://localhost:4000/library/delete-book/'+this.state.name)
+        console.log(this.state.name)
+        axios.get('http://localhost:4000/library/delete-book/'+this.state.name)
             .then((res)=>{
                 console.log('Book successfully deleted!');
             }).catch((error) => {

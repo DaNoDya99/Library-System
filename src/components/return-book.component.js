@@ -39,7 +39,7 @@ export default class ReturnBook extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        axios.delete('http://localhost:4000/library/return-book/' + this.state.nic)
+        axios.get('http://localhost:4000/library/return-book/' + this.state.nic)
             .then((res) => {
                 console.log('Book Successfully returned');
             }).catch((error) => {

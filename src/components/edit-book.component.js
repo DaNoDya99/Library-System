@@ -30,10 +30,10 @@ export default class EditBook extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            id: '',
-            name: '',
-            author: '',
-            quantity: ''
+            id: this.props.location.state.id,
+            name: this.props.location.state.name,
+            author: this.props.location.state.author,
+            quantity: this.props.location.state.quantity
         }
     }
 
@@ -159,7 +159,7 @@ export default class EditBook extends Component {
 
                                 <Form.Group className="mb-3" controlId="Id">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control value={this.state.id} onChange={this.onChangeBookID} type="text" placeholder="Enter Book ID" />
+                                    <Form.Control value={this.state.id} onChange={this.onChangeBookID} type="text" placeholder="Enter Book ID" readOnly='readonly'/>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Book">

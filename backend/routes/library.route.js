@@ -41,8 +41,9 @@ router.route('/add-member').post((req, res, next) => {
     });
 });
 
-router.route('/delete-book/:name').delete((req,res,next) => {
-    bookSchema.findOneAndRemove(req.params.name,(error,data) => {
+router.route('/delete-book/:id').get((req,res,next) => {
+    console.log(req.params.id)
+    bookSchema.findOneAndRemove(req.params.id,(error,data) => {
         if(error){
             return next(error);
         } else {
@@ -53,7 +54,7 @@ router.route('/delete-book/:name').delete((req,res,next) => {
     })
 })
 
-router.route('/return-book/:nic').delete((req,res,next) => {
+router.route('/return-book/:nic').get((req,res,next) => {
     issueSchema.findOneAndRemove(req.params.nic,(error,data) => {
         if(error){
             return next(error);
@@ -123,6 +124,18 @@ router.route('/edit-book').post((req, res, next) => {
         } else {
             console.log(data);
             res.json(data);
+        }
+    })
+})
+
+router.route('/delete-member/:nic').get((req,res,next) => {
+    memberSchema.findOneAndRemove(req.params.nic,(error,data) => {
+        if(error){
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            })
         }
     })
 })

@@ -3,7 +3,6 @@ import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import axios from "axios";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";

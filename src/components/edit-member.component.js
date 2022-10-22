@@ -34,13 +34,14 @@ export default class EditMember extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            nic: '',
-            name: '',
-            email: '',
-            gender: '',
-            address: '',
-            contact: ''
+            nic: this.props.location.state.nic,
+            name: this.props.location.state.name,
+            email: this.props.location.state.email,
+            gender: this.props.location.state.gender,
+            address: this.props.location.state.address,
+            contact: this.props.location.state.contact
         }
+
     }
     onChangeNIC(e){
         this.setState({nic: e.target.value})
@@ -71,8 +72,9 @@ export default class EditMember extends Component {
             address: this.state.address,
             contact: this.state.contact
         };
+        console.log(memberObject)
         axios.post('http://localhost:4000/library/edit-member', memberObject)
-            .then(res => console.log(res.data));
+            .then(res => console.log());
         this.setState({nic: '', name: '', email: '', gender: '', address: '', contact: ''});
     }
 
@@ -172,7 +174,7 @@ export default class EditMember extends Component {
                             <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="NIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>NIC Number</Form.Label>
-                                    <Form.Control type="text" value={this.state.nic} onChange={this.onChangeNIC} placeholder="Enter NIC Number"/>
+                                    <Form.Control type="text" value={this.state.nic} onChange={this.onChangeNIC} placeholder="Enter NIC Number" readOnly='readonly'/>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Name">

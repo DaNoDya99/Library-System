@@ -4,58 +4,43 @@ import {Row,Form,Button} from "react-bootstrap";
 import axios from "axios";
 
 import Lib from '../assets/lib.jpg';
-import {Redirect} from "react-router-dom";
+// import {Redirect} from "react-router-dom";
 
 export default class Signup extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
 
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this)
+        this.onChangePassword = this.onChangePassword.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
             email: '',
-            password: '',
-            flag: ''
+            password: ""
         }
-
     }
 
-    onChangeEmail(e) {
-        this.setState({email: e.target.value});
+    onChangeEmail(e){
+        this.setState({email: e.target.value})
     }
-    onChangePassword(e) {
-        this.setState({password: e.target.value});
+    
+    onChangePassword(e){
+        this.setState({password: e.target.value})
     }
 
     onSubmit(e){
-        e.preventDefault();
-        const userObject = {
+        e.preventDefault()
+
+        const loginDetails = {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('http://localhost:4000/library/login', {email:this.state.email,password:this.state.password})
-            .then();
-        this.setState({email:'',password:''});
 
-        axios.get('http://localhost:4000/library/login')
-            .then(res => {
-                this.setState({
-                    flag: res.data.flag
-                })
-                console.log(this.state.flag);
-            }).catch((error) => {
-            console.log(error);
+        axios.post('http://localhost:4000/library/login',loginDetails)
+        .then(res => {
+            console.log(res.data)
         })
-    }
-
-    redirect(){
-        if(this.state.flag) {
-            return <Redirect to={'/'} />
-        } else {
-            return <div></div>;
-        }
+        this.setState({email: '',password: ''})
     }
 
     render() {
@@ -90,7 +75,6 @@ export default class Signup extends Component {
                                 <Button type={'submit'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
                             </div>
                         </Form>
-                        {this.redirect()}
                     </div>
                 </Row>
             </div>

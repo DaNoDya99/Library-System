@@ -26,6 +26,7 @@ export default class SearchMember extends Component {
 
         this.onChangeNIC = this.onChangeNIC.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.state = {
             nic: '',
             memberDetails: {},
@@ -50,6 +51,13 @@ export default class SearchMember extends Component {
             }).catch((error) => {
             console.log("Error")
         });
+    }
+
+    handleClick(e){
+        e.preventDefault();
+        axios.get('http://localhost:4000/library/delete-member/'+this.state.nic).then(
+            window.location.reload()
+        )
     }
 
     tableData(){
@@ -79,10 +87,10 @@ export default class SearchMember extends Component {
                                 <td>{this.state.memberDetails.address}</td>
                                 <td>{this.state.memberDetails.contact}</td>
                                 <td style={{'display':'flex','flex-direction':'row'}}>
-                                    <Link to={'/edit-member'} className={'nav-link'}>
+                                    <Link to={{pathname: '/edit-member',state: this.state.memberDetails}} className={'nav-link'}>
                                         <Button className={'text'} style={{'background-color':'#277BC0'}}>Edit</Button>
                                     </Link>
-                                    <Button className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
+                                    <Button onClick={this.handleClick} className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
                                 </td>
 
                             </tr>
