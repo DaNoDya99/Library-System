@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import passport from 'passport';
 
 import libraryRoute from "../backend/routes/library.route.js";
 import userSchema from "./models/User.js";

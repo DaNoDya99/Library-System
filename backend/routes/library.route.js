@@ -42,14 +42,14 @@ router.route('/add-member').post((req, res, next) => {
 });
 
 router.route('/delete-book/:id').get((req,res,next) => {
-    console.log(req.params.id)
-    bookSchema.findOneAndRemove(req.params.id,(error,data) => {
-        if(error){
-            return next(error);
-        } else {
-            res.status(200).json({
-                msg: data
+    bookSchema.findOne({name:req.params.id},(err,data) => {
+        if(data){
+            bookSchema.deleteOne({id:data.id},(err,obj) => {
+                if(err) throw err;
+                res.json({msg:"Book Deleted Successfully."})
             })
+        } else {
+            res.json({msg: "Book is not in the library."})
         }
     })
 })

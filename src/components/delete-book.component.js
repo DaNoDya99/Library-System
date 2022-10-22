@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
 import axios from "axios";
 
 import addLogo from "../assets/add.png";
@@ -20,7 +21,6 @@ import Button from 'react-bootstrap/Button';
 import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-
 export default class DeleteBook extends Component {
 
     constructor(props) {
@@ -29,7 +29,8 @@ export default class DeleteBook extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeBook = this.onChangeBook.bind(this);
         this.state = {
-            name: ''
+            name: '',
+            msg: '',
         }
     }
 
@@ -42,10 +43,33 @@ export default class DeleteBook extends Component {
         console.log(this.state.name)
         axios.get('http://localhost:4000/library/delete-book/'+this.state.name)
             .then((res)=>{
-                console.log('Book successfully deleted!');
+                this.setState({msg: res.data.msg})
             }).catch((error) => {
             console.log(error);
         });
+    }
+
+    alert(){
+        if(this.state.msg !== ''){
+            if(this.state.msg === "Book is not in the library."){
+                return(
+                    <Alert variant="danger" onClose={() => this.setState({msg: ''})} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <p>
+                            {this.state.msg}
+                        </p>
+                    </Alert>
+                )
+            }else{
+                return(
+                    <Alert variant="success" onClose={() => this.setState({msg: ''})} dismissible>
+                        <Alert.Heading>{this.state.msg}</Alert.Heading>
+                    </Alert>
+                )
+            }
+        }else{
+            return <div></div>
+        }
     }
 
     render() {
@@ -140,10 +164,11 @@ export default class DeleteBook extends Component {
 
                         <div style={{'text-align':'center'}}>
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Delete Book</h2>
+                            {this.alert()}
                             <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
-                                    <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control type="text"  value={this.state.name} onChange={this.onChangeBook} placeholder="Enter Book ID" />
+                                    <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
+                                    <Form.Control type="text"  value={this.state.name} onChange={this.onChangeBook} placeholder="Enter Book Name" />
                                 </Form.Group>
 
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>DELETE</Button>
