@@ -9,14 +9,20 @@ import userSchema from "../models/User.js";
 const router = express.Router();
 
 router.route('/add-book').post((req, res, next) => {
-    bookSchema.create(req.body, (error, data) => {
-        if(error) {
-            return next(error);
-        } else {
-            console.log(data);
-            res.json(data);
+    bookSchema.findOne({id:req.body.id},(err,data)=>{
+        if(err) throw err;
+        if(data){
+            res.json({msg: "ID already exist."})
+        }else{
+            bookSchema.create(req.body, (error, data) => {
+                if(error) {
+                    return next(error);
+                } else {
+                    res.json({msg: "Book added."});
+                }
+            });
         }
-    });
+    })
 });
 
 router.route('/issue-book').post((req, res, next) => {
@@ -35,7 +41,6 @@ router.route('/add-member').post((req, res, next) => {
         if(error) {
             return next(error);
         } else {
-            console.log(data);
             res.json(data);
         }
     });

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import Alert from 'react-bootstrap/Alert';
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -34,7 +35,8 @@ export default class AddBook extends Component {
             id: '',
             name: '',
             author: '',
-            quantity: ''
+            quantity: '',
+            msg: '',
         }
     }
 
@@ -60,8 +62,33 @@ export default class AddBook extends Component {
             quantity: this.state.quantity
         }
         axios.post('http://localhost:4000/library/add-book', bookObject)
-            .then(res => console.log(res.data));
+            .then(res => {
+                this.setState({msg: res.data.msg})
+            });
         this.setState({id:'',name:'',author:'',quantity:''});
+    }
+
+    alert(){
+        if(this.state.msg !== ''){
+            if(this.state.msg === "ID already exist."){
+                return(
+                    <Alert variant="danger" onClose={() => this.setState({msg: ''})} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <p>
+                            {this.state.msg}
+                        </p>
+                    </Alert>
+                )
+            }else{
+                return(
+                    <Alert variant="success" onClose={() => this.setState({msg: ''})} dismissible>
+                        <Alert.Heading>{this.state.msg}</Alert.Heading>
+                    </Alert>
+                )
+            }
+        }else{
+            return <div></div>
+        }
     }
 
     render() {
@@ -155,7 +182,7 @@ export default class AddBook extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Add Book</h2>
-
+                            {this.alert()}
                             <Form style={{"width":"600px",'margin':"0 auto"}} onSubmit={this.onSubmit}>
 
                                 <Form.Group className="mb-3" controlId="Id">
