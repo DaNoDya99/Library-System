@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import axios from "axios";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation,useNavigate} from "react-router-dom";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -21,6 +21,19 @@ import searchMemberLogo from "../assets/searchMember.png";
 
 
 export function EditMember(props) {
+
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if(!localStorage.getItem("user")){
+            navigate('/login')
+        }
+    })
+
+    const handleClick = () => {
+        localStorage.removeItem("user");
+        navigate('/login')
+    }
 
     const prevNIC = useLocation().state.nic;
     const prevName = useLocation().state.name;
@@ -56,7 +69,7 @@ export function EditMember(props) {
                     <div className={"col-5"} style={{'background-color':'#1C3879','text-align':'center','border-bottom-right-radius':'100px'}}>
                         <h1 className={"title mt-5"}>Book Hub</h1>
                         <p className={"text h3"}>Welcome back to the library.</p>
-                        <Row style={{'margin-top': '10rem'} }>
+                        <Row style={{'margin-top': '4rem'} }>
                             <Col>
                                 <div>
                                     <Link to={'/add-book'} className={'nav-link'}>
@@ -112,11 +125,9 @@ export function EditMember(props) {
                         </Row>
 
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
-                            <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
-                            </Link>
+                            <img onClick={handleClick} className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'3rem','margin-right':'6rem'}}/>
                             <Link to={'/'} className={'nav-link'}>
-                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'3rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
@@ -184,10 +195,4 @@ export function EditMember(props) {
                 </Row>
             </div>
         );
-
-    // return(
-    //     <div>
-    //         <h1>Hello</h1>
-    //     </div>
-    // )
 }

@@ -18,6 +18,7 @@ const options = {
   collection: "sessions",
   ttl: 20,
 };
+
 App.use(
   session({
     secret: "veryGood",
@@ -26,11 +27,13 @@ App.use(
     store: MongoStore.create(options),
   })
 );
+
 App.use(passport.initialize(undefined));
 App.use(passport.session(undefined));
 passport.serializeUser(function (user, done) {
   done(null, user._id);
 });
+
 // passport.deserializeUser(function(id,done){
 passport.deserializeUser(async function (id, done) {
   const result = await Database.db.collection("users").findOne({ _id: id });

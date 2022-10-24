@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from "react";
+import React, {useEffect} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
@@ -27,6 +27,10 @@ export  function Home(props) {
         }
     })
 
+    const handleClick = () => {
+        localStorage.removeItem("user");
+        navigate('/login')
+    }
         
         return (
             <div>
@@ -34,7 +38,7 @@ export  function Home(props) {
                     <div className={"col-5"} style={{'background-color':'#1C3879','text-align':'center','border-bottom-right-radius':'100px'}}>
                         <h1 className={"title mt-5"}>Book Hub</h1>
                         <p className={"text h3"}>Welcome back to the library.</p>
-                        <Row style={{'margin-top': '10rem'} }>
+                        <Row style={{'margin-top': '4rem'} }>
                             <Col>
                                 <div>
                                     <Link to={'/add-book'} className={'nav-link'}>
@@ -89,7 +93,7 @@ export  function Home(props) {
                         </Row>
                         <div>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem'}}/>
+                                <img onClick={handleClick} className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'3rem'}}/>
                             </Link>
                         </div>
                     </div>

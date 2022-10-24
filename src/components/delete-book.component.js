@@ -23,14 +23,14 @@ import searchMemberLogo from "../assets/searchMember.png";
 
 export function DeleteBook(props) {
 
-    let msg = '';
+    let [msg,onChangeMsg] = useState("");
     const [name,onChangeBook] = useState("");
 
     const onSubmit = (e) => {
         e.preventDefault();
         axios.get('http://localhost:4000/library/delete-book/'+name)
             .then((res)=>{
-                msg = res.data.msg;
+                onChangeMsg(res.data.msg);
             }).catch((error) => {
             console.log(error);
         });
@@ -66,7 +66,7 @@ export function DeleteBook(props) {
                     <div className={"col-5"} style={{'background-color':'#1C3879','text-align':'center','border-bottom-right-radius':'100px'}}>
                         <h1 className={"title mt-5"}>Book Hub</h1>
                         <p className={"text h3"}>Welcome back to the library.</p>
-                        <Row style={{'margin-top': '10rem'} }>
+                        <Row style={{'margin-top': '4rem'} }>
                             <Col>
                                 <div>
                                     <Link to={'/add-book'} className={'nav-link'}>
@@ -123,10 +123,10 @@ export function DeleteBook(props) {
                         
                         <div style={{'display':'flex','flex-direction':'row','justify-content': 'center'}}>
                             <Link to={'login'} className={'nav-link'}>
-                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-right':'6rem'}}/>
+                                <img className={'mb-5'} src={logoutLogo} alt="Logout" style={{"width": '75px','margin-top':'3rem','margin-right':'6rem'}}/>
                             </Link>
                             <Link to={'/'} className={'nav-link'}>
-                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'6rem','margin-left':'6rem'}}/>
+                                <img className={'mb-5'} src={home} alt="Logout" style={{"width": '75px','margin-top':'3rem','margin-left':'6rem'}}/>
                             </Link>
                         </div>
                     </div>
