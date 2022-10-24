@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
@@ -19,49 +19,33 @@ import profile from "../assets/profile.png";
 import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-export default class SearchMember extends Component {
+export function SearchMember(props) {
 
-    constructor(props) {
-        super(props);
+    
+    const [flag,onChangeFlag] = useState("");
+    const [nic,onChangeNIC] = useState("");
+    const [memberDetails,onChangeMember] = useState("");
 
-        this.onChangeNIC = this.onChangeNIC.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.state = {
-            nic: '',
-            memberDetails: {},
-            flag: false
-        }
-    }
-
-    onChangeNIC(e){
-        this.setState({nic: e.target.value});
-    }
-
-    onSubmit(e){
+    const onSubmit = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:4000/library/search-member/'+this.state.nic)
+        axios.get('http://localhost:4000/library/search-member/'+nic)
             .then(res => {
-                this.setState({
-                   memberDetails: res.data
-                });
-                this.setState({
-                    flag:true
-                })
+                onChangeMember(res.data);
+                onChangeFlag(true);
             }).catch((error) => {
             console.log("Error")
         });
     }
 
-    handleClick(e){
+    const handleClick = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:4000/library/delete-member/'+this.state.nic).then(
+        axios.get('http://localhost:4000/library/delete-member/'+nic).then(
             window.location.reload()
         )
     }
 
-    tableData(){
-        if(this.state.flag){
+    const tableData = () => {
+        if(flag){
             return (
                 <div style={{'text-align':'center'}}>
                     <h2 className={'title2 mt-5'}>Search Results</h2>
@@ -80,17 +64,17 @@ export default class SearchMember extends Component {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{this.state.memberDetails.nic}</td>
-                                <td>{this.state.memberDetails.name}</td>
-                                <td>{this.state.memberDetails.email}</td>
-                                <td>{this.state.memberDetails.gender}</td>
-                                <td>{this.state.memberDetails.address}</td>
-                                <td>{this.state.memberDetails.contact}</td>
+                                <td>{memberDetails.nic}</td>
+                                <td>{memberDetails.name}</td>
+                                <td>{memberDetails.email}</td>
+                                <td>{memberDetails.gender}</td>
+                                <td>{memberDetails.address}</td>
+                                <td>{memberDetails.contact}</td>
                                 <td style={{'display':'flex','flex-direction':'row'}}>
-                                    <Link to={{pathname: '/edit-member',state: this.state.memberDetails}} className={'nav-link'}>
+                                    <Link to="/edit-member" state={memberDetails} className={'nav-link'}>
                                         <Button className={'text'} style={{'background-color':'#277BC0'}}>Edit</Button>
                                     </Link>
-                                    <Button onClick={this.handleClick} className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
+                                    <Button onClick={handleClick} className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
                                 </td>
 
                             </tr>
@@ -104,7 +88,6 @@ export default class SearchMember extends Component {
         }
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -196,19 +179,18 @@ export default class SearchMember extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Member</h2>
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupBook">
                                     <Form.Label className={'text'} style={{'color':'black'}}> NIC Number of The Member</Form.Label>
-                                    <Form.Control value={this.state.nic} onChange={this.onChangeNIC} type="text" placeholder="Enter NIC" />
+                                    <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter NIC" />
                                 </Form.Group>
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
                         </div>
-
-                        {this.tableData()}
+                        {tableData()}
                     </div>
                 </Row>
             </div>
         );
-    }
+
 }

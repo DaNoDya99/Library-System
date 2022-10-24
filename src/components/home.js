@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, {Component, useEffect} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 
 import addLogo from "../assets/add.png";
 import searchLogo from "../assets/search.png";
@@ -17,17 +17,17 @@ import settings from "../assets/settings.png";
 import profile from "../assets/profile.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-export default class Home extends Component {
+export  function Home(props) {
 
-    constructor(props) {
-        super(props);
+    const navigate = useNavigate()
 
-        this.state = {
-            flag:{}
+    useEffect(()=>{
+        if(!localStorage.getItem("user")){
+            navigate('/login')
         }
-    }
+    })
 
-    render() {
+        
         return (
             <div>
                 <Row>
@@ -188,5 +188,5 @@ export default class Home extends Component {
                 </Row>
             </div>
         );
-    }
+    
 }

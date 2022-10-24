@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -21,45 +21,24 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class IssueBook extends Component {
+export function IssueBook(props) {
 
-    constructor(props) {
-        super(props);
 
-        this.onChangeBookID = this.onChangeBookID.bind(this);
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeNIC = this.onChangeNIC.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-        this.state = {
-            id: '',
-            name: '',
-            nic: '',
-        }
-    }
-
-    onChangeBookID(e){
-        this.setState({id: e.target.value});
-    }
-    onChangeName(e){
-        this.setState({name: e.target.value});
-    }
-    onChangeNIC(e){
-        this.setState({nic: e.target.value});
-    }
-    onSubmit(e){
+    const [id,onChangeBookID] = useState("");
+    const [name,onChangeName] = useState("");
+    const [nic,onChangeNIC] = useState("");
+    
+    const onSubmit = (e) => {
         e.preventDefault();
         const issueObject = {
-            id: this.state.id,
-            name: this.state.name,
-            nic: this.state.nic
+            id: id,
+            name: name,
+            nic: nic
         };
         axios.post('http://localhost:4000/library/issue-book', issueObject)
             .then(res => console.log(res.data))
-        this.setState({id:'',name: '', nic: ''});
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -152,18 +131,18 @@ export default class IssueBook extends Component {
 
                         <div style={{'text-align':'center'}}>
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Issue Book</h2>
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control value={this.state.id} onChange={this.onChangeBookID} type="text" placeholder="Enter Book ID" />
+                                    <Form.Control value={id} onChange={(e) => onChangeBookID(e.target.value)} type="text" placeholder="Enter Book ID" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGroupPassword">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Book Name" />
+                                    <Form.Control value={name} onChange={(e) => onChangeName(e.target.value)} type="text" placeholder="Enter Book Name" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGroupPassword">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Member NIC</Form.Label>
-                                    <Form.Control value={this.state.nic} onChange={this.onChangeNIC} type="text" placeholder="Enter Member NIC" />
+                                    <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter Member NIC" />
                                 </Form.Group>
 
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>ISSUE</Button>
@@ -173,6 +152,5 @@ export default class IssueBook extends Component {
                 </Row>
             </div>
         );
-    }
 }
 

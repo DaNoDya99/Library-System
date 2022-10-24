@@ -1,49 +1,40 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import './home.css';
 import {Row,Form,Button} from "react-bootstrap";
 import axios from "axios";
 
 import Lib from '../assets/lib.jpg';
-// import {Redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-export default class Signup extends Component {
-    constructor(props){
-        super(props);
+export function Signup(props) {
 
-        this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
-
-        this.state = {
-            email: '',
-            password: ""
+    const navigate = useNavigate()
+    useEffect(() => {
+        if(localStorage.getItem("user")){
+            navigate('/')
         }
-    }
+    })
 
-    onChangeEmail(e){
-        this.setState({email: e.target.value})
-    }
-    
-    onChangePassword(e){
-        this.setState({password: e.target.value})
-    }
+    const [email,onChangeEmail] = useState("")
+    const [password,onChangePassword] = useState("")
 
-    onSubmit(e){
+    const onSubmit = (e) => {
         e.preventDefault()
 
         const loginDetails = {
-            email: this.state.email,
-            password: this.state.password
+            username: email,
+            password: password
         }
 
-        axios.post('http://localhost:4000/library/login',loginDetails)
+        axios.post('http://localhost:4000/login',loginDetails)
         .then(res => {
-            console.log(res.data)
+            if(res.data !== "Login Page"){
+                localStorage.setItem("user",JSON.stringify({username: res.data.username}))
+                window.location.reload()
+            }
         })
-        this.setState({email: '',password: ''})
     }
 
-    render() {
         return(
             <div>
                 <Row>
@@ -62,14 +53,14 @@ export default class Signup extends Component {
                             <h2 className={'title2 mt-5'} style={{'font-size':'50px'}}>Welcome Back! Please Login Your Account</h2>
                         </div>
 
-                        <Form onSubmit={this.onSubmit} style={{'width':'500px','margin':'0 auto','margin-top':'60px'}}>
+                        <Form onSubmit={onSubmit} style={{'width':'500px','margin':'0 auto','margin-top':'60px'}}>
                             <Form.Group className="mb-3" controlId="formGroupEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control  value={this.state.email} onChange={this.onChangeEmail}  type="email" placeholder="Enter email" />
+                                <Form.Control  value={email} onChange={(e) => onChangeEmail(e.target.value)}  type="email" placeholder="Enter email" />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formGroupPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control  value={this.state.password} onChange={this.onChangePassword}  type="password" placeholder="Password" />
+                                <Form.Control  value={password} onChange={(e) => onChangePassword(e.target.value)}  type="password" placeholder="Password" />
                             </Form.Group>
                             <div style={{'text-align':'center'}}>
                                 <Button type={'submit'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
@@ -79,5 +70,4 @@ export default class Signup extends Component {
                 </Row>
             </div>
         )
-    }
 }

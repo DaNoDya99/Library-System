@@ -1,26 +1,15 @@
-import express from 'express';
-import mongoose from "mongoose";
+import app from './Core/Application.js';
+
 import cors from 'cors';
 import bodyParser from "body-parser";
-import bcrypt from "bcrypt";
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import passport from 'passport';
-
-import libraryRoute from "../backend/routes/library.route.js";
+//d
+import libraryRoute from "../backend/routes/library_route.js";
 import userSchema from "./models/User.js";
-import router from "../backend/routes/library.route.js";
+// import Library from "../backend/routes/library.route.js";
+import Authenticate from "../backend/routes/Authenticate.js";
 
-mongoose
-    .connect('mongodb://127.0.0.1:27017/librarydb')
-    .then((x) => {
-        console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
-    })
-    .catch((err) => {
-        console.error('Error connecting to mongo', err.reason)
-    });
-
-const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({
@@ -28,7 +17,8 @@ app.use(cors({
     methods: ["GET","POST"],
     credentials: true
 }));
-app.use('/library',libraryRoute);
+app.use('/library', libraryRoute);
+app.use('', Authenticate);
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -42,29 +32,8 @@ app.use(session({
     }
 ))
 
-router.post('/login', (req,res) => {
-    userSchema.findOne({email:req.body.email})
-        .then(
-            result =>{
-                
-                if(!result){
-                    res.json({message: "Email is not registered"});
-                }else{
-                    bcrypt.compare(req.body.password,result.password,(err,isMatch) => {
-                        if(isMatch){
-                            console.log(result)
-                            res.redirect('/');
-                        }else{
-                            res.json({ message: "Wrong Password" })
-                        }
-                    })
-                }
-            }
-        )
-})
 
-
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log("Server Started on Port " + PORT);
 })

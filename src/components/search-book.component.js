@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
@@ -20,41 +20,26 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class SearchBook extends Component {
+export function SearchBook() {
 
-    constructor(props) {
-        super(props);
+    
+    const [flag,onChangeFlag] = useState("");
+    const [bookDetails,onChangeBookDetails] = useState("");
+    const [name,onChangeName] = useState("");
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.state = {
-            name: '',
-            bookDetails: {},
-            flag: false
-        }
-    }
-
-    onChangeName(e){
-        this.setState({name: e.target.value});
-    }
-
-    onSubmit(e){
+    const onSubmit = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:4000/library/search-book/'+this.state.name)
+        axios.get('http://localhost:4000/library/search-book/'+name)
             .then(res => {
-                this.setState({
-                   bookDetails: res.data
-                });
-                this.setState({
-                    flag:true
-                })
+                onChangeBookDetails(res.data);
+                onChangeFlag(true);
             }).catch((error) => {
             console.log(error)
         });
     }
 
-    tableData(){
-        if(this.state.flag){
+    const tableData = () =>{
+        if(flag){
             return (
                 <div style={{'text-align':'center'}}>
                     <h2 className={'title2 mt-5'}>Search Results</h2>
@@ -70,10 +55,14 @@ export default class SearchBook extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                            <tr><td>{this.state.bookDetails.id}</td><td>{this.state.bookDetails.name}</td><td>{this.state.bookDetails.author}</td><td>{this.state.bookDetails.quantity}</td>
+                            <tr>
+                                <td>{bookDetails.id}</td>
+                                <td>{bookDetails.name}</td>
+                                <td>{bookDetails.author}</td>
+                                <td>{bookDetails.quantity}</td>
                                 
                                 <td>
-                                    <Link to={{pathname:'/edit-book',state: this.state.bookDetails}} className={'nav-link'}>
+                                    <Link to="/edit-book" state={bookDetails} className={'nav-link'}>
                                         <Button style={{'background-color':'#277BC0'}}>Edit Book</Button>
                                     </Link>
                                 </td>
@@ -89,7 +78,6 @@ export default class SearchBook extends Component {
 
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -180,19 +168,19 @@ export default class SearchBook extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Search Book</h2>
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupBook">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control value={this.state.name} onChange={this.onChangeName} type="text" placeholder="Enter Book Name" />
+                                    <Form.Control value={name} onChange={(e) => onChangeName(e.target.value)} type="text" placeholder="Enter Book Name" />
                                 </Form.Group>
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
                         </div>
 
-                        {this.tableData()}
+                        {tableData()}
                     </div>
                 </Row>
             </div>
         );
-    }
+
 }

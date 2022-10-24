@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
@@ -20,26 +20,13 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class ReturnBook extends Component {
+export function ReturnBook(props) {
 
-    constructor(props) {
-        super(props);
-
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeNIC = this.onChangeNIC.bind(this);
-
-        this.state = {
-            nic: ''
-        }
-    }
-
-    onChangeNIC(e){
-        this.setState({nic: e.target.value})
-    }
-
-    onSubmit(e) {
+    const [nic,onChangeNIC] = useState("");
+    
+    const onSubmit = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:4000/library/return-book/' + this.state.nic)
+        axios.get('http://localhost:4000/library/return-book/' + nic)
             .then((res) => {
                 console.log('Book Successfully returned');
             }).catch((error) => {
@@ -47,7 +34,6 @@ export default class ReturnBook extends Component {
         })
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -138,19 +124,17 @@ export default class ReturnBook extends Component {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Return Book</h2>
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupNIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Member NIC Number</Form.Label>
-                                    <Form.Control value={this.state.nic} onChange={this.onChangeNIC} type="text" placeholder="Enter NIC Number" />
+                                    <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter NIC Number" />
                                 </Form.Group>
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>RETURN</Button>
                             </Form>
-
-
                         </div>
                     </div>
                 </Row>
             </div>
         );
-    }
+    
 }

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
@@ -20,51 +20,25 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class AddBook extends Component {
-    constructor(props) {
-        super(props);
+export function AddBook(props) {
 
-        this.onChangeBookID = this.onChangeBookID.bind(this);
-        this.onChangeBookName = this.onChangeBookName.bind(this);
-        this.onChangeAuthor = this.onChangeAuthor.bind(this);
-        this.onChangeQuantity = this.onChangeQuantity.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+    const [id,onChangeBookID] = useState("");
+    const [name,onChangeBookName] = useState("");
+    const [author,onChangeAuthor] = useState("");
+    const [quantity,onChangeQuantity] = useState("");
 
-        this.state = {
-            id: '',
-            name: '',
-            author: '',
-            quantity: ''
-        }
-    }
-
-    onChangeBookID(e) {
-        this.setState({id: e.target.value});
-    }
-    onChangeBookName(e) {
-        this.setState({name: e.target.value});
-    }
-    onChangeAuthor(e) {
-        this.setState({author: e.target.value});
-    }
-    onChangeQuantity(e) {
-        this.setState({quantity: e.target.value});
-    }
-
-    onSubmit(e) {
+    const onSubmit = (e) => {
         e.preventDefault();
         const bookObject = {
-            id: this.state.id,
-            name: this.state.name,
-            author: this.state.author,
-            quantity: this.state.quantity
+            id: id,
+            name: name,
+            author: author,
+            quantity: quantity
         }
         axios.post('http://localhost:4000/library/add-book', bookObject)
             .then(res => console.log(res.data));
-        this.setState({id:'',name:'',author:'',quantity:''});
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -156,26 +130,26 @@ export default class AddBook extends Component {
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Add Book</h2>
 
-                            <Form style={{"width":"600px",'margin':"0 auto"}} onSubmit={this.onSubmit}>
+                            <Form style={{"width":"600px",'margin':"0 auto"}} onSubmit={onSubmit}>
 
                                 <Form.Group className="mb-3" controlId="Id">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control type="text" value={this.state.id} onChange={this.onChangeBookID} placeholder="Enter Book ID" />
+                                    <Form.Control type="text" value={id} onChange={(e) => onChangeBookID(e.target.value)} placeholder="Enter Book ID" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Book">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control type="text" value={this.state.name} onChange={this.onChangeBookName} placeholder="Enter Book Name" />
+                                    <Form.Control type="text" value={name} onChange={(e) => onChangeBookName(e.target.value)} placeholder="Enter Book Name" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Author">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Author Name</Form.Label>
-                                    <Form.Control type="text" value={this.state.author} onChange={this.onChangeAuthor} placeholder="Enter Author Name" />
+                                    <Form.Control type="text" value={author} onChange={(e) => onChangeAuthor(e.target.value)} placeholder="Enter Author Name" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Quantity">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Quantity</Form.Label>
-                                    <Form.Control type={'text'} value={this.state.quantity} onChange={this.onChangeQuantity} placeholder="Enter Quantity" />
+                                    <Form.Control type={'text'} value={quantity} onChange={(e) => onChangeQuantity(e.target.value)} placeholder="Enter Quantity" />
                                 </Form.Group>
                                 <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}} type='submit' block="block">ADD</Button>
                             </Form>
@@ -184,5 +158,5 @@ export default class AddBook extends Component {
                 </Row>
             </div>
         );
-    }
+
 }

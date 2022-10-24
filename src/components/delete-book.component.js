@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -21,49 +21,36 @@ import Button from 'react-bootstrap/Button';
 import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
-export default class DeleteBook extends Component {
+export function DeleteBook(props) {
 
-    constructor(props) {
-        super(props);
+    let msg = '';
+    const [name,onChangeBook] = useState("");
 
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeBook = this.onChangeBook.bind(this);
-        this.state = {
-            name: '',
-            msg: '',
-        }
-    }
-
-    onChangeBook(e){
-        this.setState({name: e.target.value})
-    }
-
-    onSubmit(e) {
+    const onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.name)
-        axios.get('http://localhost:4000/library/delete-book/'+this.state.name)
+        axios.get('http://localhost:4000/library/delete-book/'+name)
             .then((res)=>{
-                this.setState({msg: res.data.msg})
+                msg = res.data.msg;
             }).catch((error) => {
             console.log(error);
         });
     }
 
-    alert(){
-        if(this.state.msg !== ''){
-            if(this.state.msg === "Book is not in the library."){
+    const alert = () => {
+        if(msg !== ''){
+            if(msg === "Book is not in the library."){
                 return(
-                    <Alert variant="danger" onClose={() => this.setState({msg: ''})} dismissible>
+                    <Alert variant="danger" onClose={() => msg=''} dismissible>
                         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
                         <p>
-                            {this.state.msg}
+                            {msg}
                         </p>
                     </Alert>
                 )
             }else{
                 return(
-                    <Alert variant="success" onClose={() => this.setState({msg: ''})} dismissible>
-                        <Alert.Heading>{this.state.msg}</Alert.Heading>
+                    <Alert variant="success" onClose={() => msg = ''} dismissible>
+                        <Alert.Heading>{msg}</Alert.Heading>
                     </Alert>
                 )
             }
@@ -72,7 +59,7 @@ export default class DeleteBook extends Component {
         }
     }
 
-    render() {
+    
         return (
             <div>
                 <Row>
@@ -164,11 +151,11 @@ export default class DeleteBook extends Component {
 
                         <div style={{'text-align':'center'}}>
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Delete Book</h2>
-                            {this.alert()}
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            {alert()}
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control type="text"  value={this.state.name} onChange={this.onChangeBook} placeholder="Enter Book Name" />
+                                    <Form.Control type="text"  value={name} onChange={(e) => onChangeBook(e.target.value)} placeholder="Enter Book Name" />
                                 </Form.Group>
 
                                 <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>DELETE</Button>
@@ -179,6 +166,6 @@ export default class DeleteBook extends Component {
                 </Row>
             </div>
         );
-    }
+    
 }
 

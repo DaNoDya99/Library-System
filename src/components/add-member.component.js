@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,63 +20,30 @@ import home from "../assets/home.png";
 import searchMemberLogo from "../assets/searchMember.png";
 
 
-export default class AddMember extends Component {
+export function AddMember(props){
 
-    constructor(props) {
-        super(props);
+    const [nic, onChangeNIC] = useState("")
+    const [name, onChangeName] = useState("")
+    const [email, onChangeEmail] = useState("")
+    const [gender, onChangeGender] = useState("")
+    const [address, onChangeAddress] = useState("")
+    const [contact, onChangeContact] = useState("")
 
-        this.onChangeNIC = this.onChangeNIC.bind(this);
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeGender = this.onChangeGender.bind(this);
-        this.onChangeAddress = this.onChangeAddress.bind(this);
-        this.onChangeContact = this.onChangeContact.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
 
-        this.state = {
-            nic: '',
-            name: '',
-            email: '',
-            gender: '',
-            address: '',
-            contact: ''
-        }
-    }
-    onChangeNIC(e){
-        this.setState({nic: e.target.value})
-    }
-    onChangeName(e){
-        this.setState({name: e.target.value})
-    }
-    onChangeEmail(e){
-        this.setState({email: e.target.value})
-    }
-    onChangeGender(e){
-        this.setState({gender: e.target.value})
-    }
-    onChangeAddress(e){
-        this.setState({address: e.target.value})
-    }
-    onChangeContact(e){
-        this.setState({contact: e.target.value})
-    }
-
-    onSubmit(e){
+    const onSubmit = (e) => {
         e.preventDefault()
         const memberObject = {
-            nic: this.state.nic,
-            name: this.state.name,
-            email: this.state.email,
-            gender: this.state.gender,
-            address: this.state.address,
-            contact: this.state.contact
+            nic: nic,
+            name: name,
+            email: email,
+            gender: gender,
+            address: address,
+            contact: contact
         };
         axios.post('http://localhost:4000/library/add-member', memberObject)
             .then(res => console.log(res.data));
-        this.setState({nic: '', name: '', email: '', gender: '', address: '', contact: ''});
     }
 
-    render() {
         return (
             <div>
                 <Row>
@@ -169,25 +136,25 @@ export default class AddMember extends Component {
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-3'} style={{'font-size':'50px'}}>Add Member</h2>
 
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="NIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>NIC Number</Form.Label>
-                                    <Form.Control type="text" value={this.state.nic} onChange={this.onChangeNIC} placeholder="Enter NIC Number"/>
+                                    <Form.Control type="text" value={nic} onChange={(e) => onChangeNIC(e.target.value)} placeholder="Enter NIC Number"/>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Name">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Name</Form.Label>
-                                    <Form.Control type="text" value={this.state.name} onChange={this.onChangeName} placeholder="Enter Name" />
+                                    <Form.Control type="text" value={name} onChange={(e) => onChangeName(e.target.value)} placeholder="Enter Name" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Email">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Email</Form.Label>
-                                    <Form.Control type="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="Enter Email" />
+                                    <Form.Control type="email" value={email} onChange={(e) => onChangeEmail(e.target.value)} placeholder="Enter Email" />
                                 </Form.Group>
 
                                 <Form.Group className={"mb-3"} controlId="Gender">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Gender</Form.Label>
-                                    <Form.Select value={this.state.gender} onChange={this.onChangeGender} aria-label="Default select example" >
+                                    <Form.Select value={gender} onChange={(e) => onChangeGender(e.target.value)} aria-label="Default select example" >
                                         <option>--- Select Gender ---</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -196,12 +163,12 @@ export default class AddMember extends Component {
 
                                 <Form.Group className="mb-3" controlId="Adress">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Home Address</Form.Label>
-                                    <Form.Control type="text" value={this.state.address} onChange={this.onChangeAddress} placeholder="Enter Home Address" />
+                                    <Form.Control type="text" value={address} onChange={(e) => onChangeAddress(e.target.value)} placeholder="Enter Home Address" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Contact">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Contact Number</Form.Label>
-                                    <Form.Control value={this.state.contact} onChange={this.onChangeContact} type="text" placeholder="Enter Contact Number" />
+                                    <Form.Control value={contact} onChange={(e) => onChangeContact(e.target.value)} type="text" placeholder="Enter Contact Number" />
                                 </Form.Group>
 
                                 <Button className={'text'} type="submit" size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'30px'}} block="block">ADD</Button>
@@ -213,5 +180,5 @@ export default class AddMember extends Component {
                 </Row>
             </div>
         );
-    }
+    
 }

@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import axios from "axios";
 
 import addLogo from "../assets/add.png";
@@ -19,51 +19,32 @@ import profile from "../assets/profile.png";
 import searchMemberLogo from "../assets/searchMember.png"
 import home from "../assets/home.png"
 
-export default class EditBook extends Component {
-    constructor(props) {
-        super(props);
+export function EditBook(props) {
 
-        this.onChangeBookID = this.onChangeBookID.bind(this);
-        this.onChangeBookName = this.onChangeBookName.bind(this);
-        this.onChangeAuthor = this.onChangeAuthor.bind(this);
-        this.onChangeQuantity = this.onChangeQuantity.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+    const prevId = useLocation().state.id;
+    const prevName = useLocation().state.name;
+    const prevAuthor = useLocation().state.author;
+    const prevQuantity = useLocation().state.quantity;
 
-        this.state = {
-            id: this.props.location.state.id,
-            name: this.props.location.state.name,
-            author: this.props.location.state.author,
-            quantity: this.props.location.state.quantity
-        }
-    }
+    const [id, onChangeBookID] = useState(prevId);
+    const [name, onChangeBookName] = useState(prevName);
+    const [author, onChangeAuthor] = useState(prevAuthor);
+    const [quantity, onChangeQuantity] = useState(prevQuantity);
 
-    onChangeBookID(e) {
-        this.setState({id: e.target.value});
-    }
-    onChangeBookName(e) {
-        this.setState({name: e.target.value});
-    }
-    onChangeAuthor(e) {
-        this.setState({author: e.target.value});
-    }
-    onChangeQuantity(e) {
-        this.setState({quantity: e.target.value});
-    }
 
-    onSubmit(e) {
+    const onSubmit = (e) => {
         e.preventDefault();
         const bookObject = {
-            id: this.state.id,
-            name: this.state.name,
-            author: this.state.author,
-            quantity: this.state.quantity
+            id: id,
+            name: name,
+            author: author,
+            quantity: quantity
         }
         axios.post('http://localhost:4000/library/edit-book', bookObject)
-            .then(res => console.log(res.data));
-        this.setState({id:'',name:'',author:'',quantity:''});
+            .then(res => console.log());
     }
 
-    render() {
+    
         return (
             <div>
                 <Row>
@@ -153,28 +134,28 @@ export default class EditBook extends Component {
                         </Navbar>
 
                         <div style={{'text-align':'center'}} >
-                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Edit Book</h2>
+                            <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>{prevName}</h2>
 
-                            <Form onSubmit={this.onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
+                            <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
 
                                 <Form.Group className="mb-3" controlId="Id">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
-                                    <Form.Control value={this.state.id} onChange={this.onChangeBookID} type="text" placeholder="Enter Book ID" readOnly='readonly'/>
+                                    <Form.Control value={id} onChange={(e) => onChangeBookID(e.target.value)} type="text" placeholder="Enter Book ID" readOnly='readonly'/>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Book">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
-                                    <Form.Control value={this.state.name} onChange={this.onChangeBookName} type="text" placeholder="Enter Book Name" />
+                                    <Form.Control value={name} onChange={(e) => onChangeBookName(e.target.value)} type="text" placeholder="Enter Book Name" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Author">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Author Name</Form.Label>
-                                    <Form.Control value={this.state.author} onChange={this.onChangeAuthor} type="text" placeholder="Enter Author Name" />
+                                    <Form.Control value={author} onChange={(e) => onChangeAuthor(e.target.value)} type="text" placeholder="Enter Author Name" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="Quantity">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Quantity</Form.Label>
-                                    <Form.Control value={this.state.quantity} onChange={this.onChangeQuantity} type={'text'} placeholder="Enter Quantity" />
+                                    <Form.Control value={quantity} onChange={(e) => onChangeQuantity(e.target.value)} type={'text'} placeholder="Enter Quantity" />
                                 </Form.Group>
                                 <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}} type='submit' block="block">SAVE</Button>
                             </Form>
@@ -183,5 +164,4 @@ export default class EditBook extends Component {
                 </Row>
             </div>
         );
-    }
 }
