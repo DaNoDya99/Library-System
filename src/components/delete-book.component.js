@@ -29,10 +29,10 @@ export function DeleteBook(props) {
     const onSubmit = (e) => {
         e.preventDefault();
         axios.get('http://localhost:4000/library/delete-book/'+name)
+
             .then((res)=>{
                 onChangeMsg(res.data.msg);
             }).catch((error) => {
-            console.log(error);
         });
     }
 

@@ -29,7 +29,6 @@ export function AddBook(props) {
             navigate('/login')
         }
     })
-
     const handleClick = () => {
         localStorage.removeItem("user");
         navigate('/login')
@@ -75,6 +74,7 @@ export function AddBook(props) {
             return <div></div>
         }
     }
+
 
         return (
             <div>
@@ -168,6 +168,7 @@ export function AddBook(props) {
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>Add Book</h2>
                             {alert()}
                             <Form style={{"width":"600px",'margin':"0 auto"}} onSubmit={onSubmit}>
+ 
 
                                 <Form.Group className="mb-3" controlId="Id">
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book ID</Form.Label>
@@ -195,5 +196,4 @@ export function AddBook(props) {
                 </Row>
             </div>
         );
-
 }
