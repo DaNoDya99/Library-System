@@ -2,7 +2,7 @@ import React, {useState,useEffect} from "react";
 import axios from "axios";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
+import {Row,Col,Navbar,Nav,Container,Form,Button,Alert} from "react-bootstrap";
 import {Link, useLocation,useNavigate} from "react-router-dom";
 
 import addLogo from "../assets/add.png";
@@ -48,6 +48,7 @@ export function EditMember(props) {
     const [gender,onChangeGender] = useState(prevGender);
     const [address,onChangeAddress] = useState(prevAddress);
     const [contact,onChangeContact] = useState(prevContact);
+    let [msg, setMsg] = useState("");
 
     const onSubmit = (e) =>{
         e.preventDefault()
@@ -60,7 +61,30 @@ export function EditMember(props) {
             contact: contact
         };
         axios.post('http://localhost:4000/library/edit-member', memberObject)
-            .then(res => console.log());
+            .then(res => setMsg(res.data.msg));
+    }
+
+    const alert = () => {
+        if(msg !== ''){
+            if(msg === "Member not Updated!"){
+                return(
+                    <Alert variant="danger" onClose={() => msg=''} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <p>
+                            {msg}
+                        </p>
+                    </Alert>
+                )
+            }else{
+                return(
+                    <Alert variant="success" onClose={() => msg = ''} dismissible>
+                        <Alert.Heading>{msg}</Alert.Heading>
+                    </Alert>
+                )
+            }
+        }else{
+            return <div></div>
+        }
     }
 
         return (
@@ -152,7 +176,7 @@ export function EditMember(props) {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-3'} style={{'font-size':'50px'}}>{prevName}</h2>
-
+                            {alert()}
                             <Form onSubmit={onSubmit}  style={{"width":"600px",'margin':"0 auto"}}>
                                 <Form.Group className="mb-3" controlId="NIC">
                                     <Form.Label className={'text'} style={{'color':'black'}}>NIC Number</Form.Label>

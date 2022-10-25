@@ -162,8 +162,12 @@ router.route('/edit-member').post((req, res, next) => {
         if(error) {
             return next(error);
         } else {
-            console.log(data);
-            res.json(data);
+            if(data){
+                res.json({msg:"Member updated Successfully!"})
+            }
+            else{
+                res.json({msg:"Member not Updated!"})
+            }
         }
     })
 })
