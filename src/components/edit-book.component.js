@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,Navbar,Nav,Container,Form,Button} from "react-bootstrap";
+import {Row,Col,Navbar,Nav,Container,Form,Button,Alert} from "react-bootstrap";
 import {Link, useLocation,useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -43,6 +43,7 @@ export function EditBook(props) {
     const [name, onChangeBookName] = useState(prevName);
     const [author, onChangeAuthor] = useState(prevAuthor);
     const [quantity, onChangeQuantity] = useState(prevQuantity);
+    let [msg,setMsg] =useState("");
 
 
     const onSubmit = (e) => {
@@ -54,7 +55,31 @@ export function EditBook(props) {
             quantity: quantity
         }
         axios.post('http://localhost:4000/library/edit-book', bookObject)
-            .then(res => console.log());
+            .then(res => setMsg(res.data.msg) );
+    }
+
+
+    const alert = () => {
+        if(msg !== ''){
+            if(msg === "Book not updated."){
+                return(
+                    <Alert variant="danger" onClose={() => msg=''} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <p>
+                            {msg}
+                        </p>
+                    </Alert>
+                )
+            }else{
+                return(
+                    <Alert variant="success" onClose={() => msg = ''} dismissible>
+                        <Alert.Heading>{msg}</Alert.Heading>
+                    </Alert>
+                )
+            }
+        }else{
+            return <div></div>
+        }
     }
 
     
@@ -148,6 +173,8 @@ export function EditBook(props) {
 
                         <div style={{'text-align':'center'}} >
                             <h2 className={'title2 my-5'} style={{'font-size':'50px'}}>{prevName}</h2>
+
+                            {alert()}
 
                             <Form onSubmit={onSubmit} style={{"width":"600px",'margin':"0 auto"}}>
 

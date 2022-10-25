@@ -173,8 +173,12 @@ router.route('/edit-book').post((req, res, next) => {
         if(error) {
             return next(error);
         } else {
-            console.log(data);
-            res.json(data);
+            if(data){
+                res.json({msg:"Book updated successfully."})
+            }
+            else{
+                res.json({msg:"Book not updated."})
+            }
         }
     })
 })
