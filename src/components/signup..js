@@ -41,7 +41,7 @@ export function Signup(props) {
     const alert = () => {
         if(flag){        
             return(
-                <Alert variant="danger" onClose={() => console.log()} style={{textAlign:"center"}} dismissible>
+                <Alert variant="danger" onClose={() => onChangeFlag(false)} style={{textAlign:"center"}} dismissible>
                     <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
                     <p>
                         "Invalid username or password"

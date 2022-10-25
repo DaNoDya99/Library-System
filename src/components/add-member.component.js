@@ -61,7 +61,7 @@ export function AddMember(props){
         if(msg !== ''){
             if(msg === "Member already exists."){
                 return(
-                    <Alert variant="danger" onClose={() => msg=''} dismissible>
+                    <Alert variant="danger" onClose={() => onChangeMsg('')} dismissible>
                         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
                         <p>
                             {msg}
@@ -70,7 +70,7 @@ export function AddMember(props){
                 )
             }else{
                 return(
-                    <Alert variant="success" onClose={() => msg = ''} dismissible>
+                    <Alert variant="success" onClose={() => onChangeMsg('')} dismissible>
                         <Alert.Heading>{msg}</Alert.Heading>
                     </Alert>
                 )
