@@ -56,7 +56,10 @@ export function SearchMember(props) {
     const handleClick = (e) => {
         e.preventDefault();
         axios.get('http://localhost:4000/library/delete-member/'+nic).then(
-            window.location.reload()
+            res => {
+                setMsg(res.data.msg);
+                onChangeFlag(false);
+            }
         )
     }
 

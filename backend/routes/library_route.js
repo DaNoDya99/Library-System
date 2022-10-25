@@ -191,10 +191,10 @@ router.route('/delete-member/:nic').get((req,res,next) => {
     memberSchema.findOneAndRemove(req.params.nic,(error,data) => {
         if(error){
             return next(error);
-        } else {
-            res.status(200).json({
-                msg: data
-            })
+        } if(data){
+            res.json({msg:"Member deleted successfully."});
+        }else{
+            res.json({msg:"Oops! an error occured."});
         }
     })
 })
