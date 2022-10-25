@@ -158,7 +158,7 @@ export function DeleteBook(props) {
                                     <Form.Control type="text"  value={name} onChange={(e) => onChangeBook(e.target.value)} placeholder="Enter Book Name" />
                                 </Form.Group>
 
-                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>DELETE</Button>
+                                <Button variant="primary" type={'submit'} className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>DELETE</Button>
                             </Form>
                         </div>
                       

@@ -184,7 +184,7 @@ export function IssueBook(props) {
                                     <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter Member NIC" />
                                 </Form.Group>
 
-                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>ISSUE</Button>
+                                <Button variant="primary" type={'submit'} className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>ISSUE</Button>
                             </Form>
                         </div>
                     </div>

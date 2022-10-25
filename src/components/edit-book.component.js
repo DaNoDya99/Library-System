@@ -197,7 +197,7 @@ export function EditBook(props) {
                                     <Form.Label className={'text'} style={{'color':'black'}}>Quantity</Form.Label>
                                     <Form.Control value={quantity} onChange={(e) => onChangeQuantity(e.target.value)} type={'text'} placeholder="Enter Quantity" />
                                 </Form.Group>
-                                <Button className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}} type='submit' block="block">SAVE</Button>
+                                <Button variant="primary" className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}} type='submit' block="block">SAVE</Button>
                             </Form>
                         </div>
                     </div>

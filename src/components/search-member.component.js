@@ -115,9 +115,9 @@ export function SearchMember(props) {
                                 <td>{memberDetails.contact}</td>
                                 <td style={{'display':'flex','flex-direction':'row'}}>
                                     <Link to="/edit-member" state={memberDetails} className={'nav-link'}>
-                                        <Button className={'text'} style={{'background-color':'#277BC0'}}>Edit</Button>
+                                        <Button variant="primary" className={'text'} style={{'background-color':'#277BC0'}}>Edit</Button>
                                     </Link>
-                                    <Button onClick={handleClick} className={'text'} style={{'background-color':'#277BC0','margin-left':'3px'}}>Del</Button>
+                                    <Button variant="primary" onClick={handleClick} className={'text'} style={{'margin-left':'3px'}}>Del</Button>
                                 </td>
 
                             </tr>
@@ -228,7 +228,7 @@ export function SearchMember(props) {
                                     <Form.Label className={'text'} style={{'color':'black'}}> NIC Number of The Member</Form.Label>
                                     <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter NIC" />
                                 </Form.Group>
-                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
+                                <Button variant="primary" type={'submit'} className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
                         </div>
                         {tableData()}

@@ -62,7 +62,7 @@ export function Signup(props) {
                         <h2 className={"title2"} style={{'color':'#F9F5EB'}}>Library Management System</h2>
 
                         <img src={Lib} className={'mt-4 mb-4'} alt="Library" style={{'width':'80%','border-bottom-right-radius':'50px','border-top-left-radius':'50px'
-                        ,'border':'5px solid #607EAA'}}/>
+                        ,'border':'5px solid #607EAA','pointerEvents':'none'}}/>
 
                         <h1 className={"mt-lg-4 title"}>Welcome Back!</h1>
                     </div>
@@ -82,7 +82,7 @@ export function Signup(props) {
                                 <Form.Control  value={password} onChange={(e) => onChangePassword(e.target.value)}  type="password" placeholder="Password" />
                             </Form.Group>
                             <div style={{'text-align':'center'}}>
-                                <Button type={'submit'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>Login</Button>
+                                <Button variant="primary" type={'submit'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>Login</Button>
                             </div>
                         </Form>
                     </div>

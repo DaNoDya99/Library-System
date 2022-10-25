@@ -167,7 +167,7 @@ export function ReturnBook(props) {
                                     <Form.Label className={'text'} style={{'color':'black'}}>Member NIC Number</Form.Label>
                                     <Form.Control value={nic} onChange={(e) => onChangeNIC(e.target.value)} type="text" placeholder="Enter NIC Number" />
                                 </Form.Group>
-                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>RETURN</Button>
+                                <Button variant="primary" type={'submit'} className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>RETURN</Button>
                             </Form>
                         </div>
                     </div>

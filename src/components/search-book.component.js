@@ -35,7 +35,7 @@ export function SearchBook() {
         navigate('/login')
     }
 
-    const [flag,onChangeFlag] = useState("");
+    const [flag,onChangeFlag] = useState(false);
     const [bookDetails,onChangeBookDetails] = useState("");
     const [name,onChangeName] = useState("");
     let [msg,setMsg] = useState("");
@@ -45,10 +45,10 @@ export function SearchBook() {
         axios.get('http://localhost:4000/library/search-book/'+name)
             .then(res => {
                 onChangeBookDetails(res.data.data);
-                if(bookDetails!==''){
+                setMsg(res.data.msg);
+                if(res.data.data!==""){
                     onChangeFlag(true);
                 }
-                setMsg(res.data.msg);
             }).catch((error) => {
             console.log(error)
         });
@@ -102,7 +102,7 @@ export function SearchBook() {
                                 
                                 <td>
                                     <Link to="/edit-book" state={bookDetails} className={'nav-link'}>
-                                        <Button style={{'background-color':'#277BC0'}}>Edit Book</Button>
+                                        <Button variant="primary">Edit Book</Button>
                                     </Link>
                                 </td>
                                 
@@ -127,7 +127,7 @@ export function SearchBook() {
                             <Col>
                                 <div>
                                     <Link to={'/add-book'} className={'nav-link'}>
-                                        <img src={addLogo} alt="add logo" style={{"width":'100px'}}/>
+                                        <img src={addLogo} alt="add logo" style={{"width":'100px'}}/>          
                                         <p className={"text"}>Add Book</p>
                                     </Link>
                                 </div>
@@ -213,10 +213,9 @@ export function SearchBook() {
                                     <Form.Label className={'text'} style={{'color':'black'}}>Book Name</Form.Label>
                                     <Form.Control value={name} onChange={(e) => onChangeName(e.target.value)} type="text" placeholder="Enter Book Name" />
                                 </Form.Group>
-                                <Button type={'submit'} className={'text'} size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'60px'}}>SEARCH</Button>
+                                <Button variant="primary" type={'submit'} className={'text'} size={'lg'} style={{'width':'150px','margin-top':'60px'}}>SEARCH</Button>
                             </Form>
                         </div>
-
                         {tableData()}
                     </div>
                 </Row>

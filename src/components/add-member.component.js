@@ -207,7 +207,7 @@ export function AddMember(props){
                                     <Form.Control value={contact} onChange={(e) => onChangeContact(e.target.value)} type="text" placeholder="Enter Contact Number" />
                                 </Form.Group>
 
-                                <Button className={'text'} type="submit" size={'lg'} style={{'background-color':'#277BC0','width':'150px','margin-top':'30px'}} block="block">ADD</Button>
+                                <Button variant="primary" className={'text'} type="submit" size={'lg'} style={{'width':'150px','margin-top':'30px'}} block="block">ADD</Button>
                             </Form>
 
 

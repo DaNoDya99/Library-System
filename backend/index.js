@@ -1,13 +1,9 @@
 import app from './Core/Application.js';
-
 import cors from 'cors';
 import bodyParser from "body-parser";
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-//d
 import libraryRoute from "../backend/routes/library_route.js";
-import userSchema from "./models/User.js";
-// import Library from "../backend/routes/library.route.js";
 import Authenticate from "../backend/routes/Authenticate.js";
 
 
