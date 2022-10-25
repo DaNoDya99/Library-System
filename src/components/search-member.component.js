@@ -64,7 +64,7 @@ export function SearchMember(props) {
         if(msg !== ''){
             if(msg === "Member not found."){
                 return(
-                    <Alert variant="danger" onClose={() => msg=''} dismissible>
+                    <Alert variant="danger" onClose={() => setMsg('')} dismissible>
                         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
                         <p>
                             {msg}
@@ -73,7 +73,7 @@ export function SearchMember(props) {
                 )
             }else{
                 return(
-                    <Alert variant="success" onClose={() => msg = ''} dismissible>
+                    <Alert variant="success" onClose={() => setMsg('')} dismissible>
                         <Alert.Heading>{msg}</Alert.Heading>
                     </Alert>
                 )
